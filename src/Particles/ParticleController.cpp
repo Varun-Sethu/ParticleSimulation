@@ -77,3 +77,17 @@ void ParticleController::updateWindowDimensions(int x, int y) {
     this->windowHeight = y;
     this->windowWidth = x;
 }
+void ParticleController::clearAccelerations() {
+    for (auto p = this->particles.begin(); p != this->particles.end(); p++) {
+        p->acceleration = cinder::vec2(0, 0);
+    }
+}
+
+
+
+// Flock towards moves all particles in the screen towards a specific position
+void ParticleController::flockTowards(cinder::vec2 position) {
+    for (auto p = this->particles.begin(); p != this->particles.end(); p++) {
+        p->moveTowards(position);
+    }
+}

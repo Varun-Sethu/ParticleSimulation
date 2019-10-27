@@ -14,11 +14,18 @@ class Particle {
 
         // Miscelenious methods
         void updateScreenDimensions(int x, int y);
+        void moveTowards(cinder::vec2 position);
+
+        cinder::vec2 getEnergy();
+        void setEnergy(cinder::vec2 energy);
+
+
+
+        cinder::vec2 position;
+        cinder::vec2 velocity;
+        cinder::vec2 acceleration; 
 
     private:
-        cinder::vec2 position;
-        cinder::vec2 velocity; 
-
         // Determines if the particle has hit the edge of the screen
         float radius;
 

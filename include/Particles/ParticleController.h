@@ -21,6 +21,10 @@ class ParticleController {
         void removeParticles(int amt);
         void updateWindowDimensions(int x, int y);
 
+        // Misc methods
+        void flockTowards(cinder::vec2 position);
+        void clearAccelerations();
+
     private:
         std::list<Particle> particles;
 
