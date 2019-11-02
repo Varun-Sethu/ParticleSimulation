@@ -5,6 +5,7 @@
 #include "Particles/ParticleController.h"
 #include <list>
 #include <iostream>
+#include "Config.h"
 
 using namespace cinder;
 
@@ -32,7 +33,17 @@ void prepareSettings(PlayingApp::Settings *settings) {
 
 PlayingApp::PlayingApp() {
     this->particleController = ParticleController();
+    
+
+    // Debug guard
+    #ifdef DEBUG
+        std::cout << "Cannot execute application with debug defined, undefine debug in include/Config.h";
+        this->quit();
+    #endif
 }
+
+
+
 
 
 

@@ -21,6 +21,16 @@ set(SRC_FILES
 
     "${APP_PATH}/include/Util/Util.h"
     "${APP_PATH}/src/Util/Util.cpp"
+
+    "${APP_PATH}/include/Util/CollisionEngine.h"
+
+    "${APP_PATH}/include/Util/QuadTree.h"
+    "${APP_PATH}/src/Util/QuadTree.cpp"
+
+    "${APP_PATH}/include/Config.h"
+
+    # Tests
+    "${APP_PATH}/tests/QuadTree/main.cpp"
 )
 
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")

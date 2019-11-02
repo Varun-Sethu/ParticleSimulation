@@ -4,6 +4,7 @@
 #include "Util/Util.h"
 #include "cinder/Rand.h"
 #include <cmath>
+#include "Config.h"
 
 Particle::Particle() {
 
@@ -17,8 +18,10 @@ Particle::Particle(cinder::vec2 position) {
 
     this->radius = cinder::randFloat(3.0f, 4.5f);
     // window stuff
-    this->windowHeight = cinder::app::getWindowHeight();
-    this->windowWidth = cinder::app::getWindowWidth();
+    #ifndef DEBUG
+        this->windowHeight = cinder::app::getWindowHeight();
+        this->windowWidth = cinder::app::getWindowWidth();
+    #endif
 }
 
 
