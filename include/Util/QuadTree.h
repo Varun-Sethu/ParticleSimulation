@@ -5,6 +5,7 @@
 #include "Particles/Particle.h"
 #include <vector>
 #include <string>
+#include <functional>
 #include <memory>
 #include "Config.h"
 
@@ -22,7 +23,9 @@ class Box {
 
 union Node {
     Box region;
-    Particle& particle;
+    std::reference_wrapper<Particle> particle;
+    
+    Node() {}
 };
 
 
@@ -34,13 +37,13 @@ class QuadTree {
 
         // util methods
         void subdivide();
-        bool insert(const Node& data);
+        bool insert(Node& data);
 
         // Search function does what it says
         std::shared_ptr<QuadTree> region_search(Particle& particle);
 
         // more util
-        bool isRegion() { return this->isRegion; }
+        bool isRegion() { return this->isARegion; }
         // Function to determine if the current node is a entirely a parent of leaf nodes
         bool parentingLeaves();
         bool isFull();
@@ -61,6 +64,7 @@ class QuadTree {
     private:
         std::vector<std::shared_ptr<QuadTree>> children{nullptr, nullptr, nullptr, nullptr};
         bool full = false;
+        bool isARegion = false;
 };
 
 

@@ -19,7 +19,7 @@ bool Box::contains(cinder::vec2 point) {
 // Quadtree methods
 QuadTree::QuadTree(Box box, QuadTree* parent) {
     this->data.region = box;
-    this->isRegion = true;
+    this->isARegion = true;
 }
 QuadTree::QuadTree(Particle& particle, QuadTree* parent) {
     this->data.particle = particle;
@@ -38,7 +38,7 @@ bool QuadTree::parentingLeaves() {
 }
 // Determine if a tree node is full
 bool QuadTree::isFull() {
-    return !(std::count(this->children.begin(), this->children.end(), nullptr)) == 4;
+    return !(std::count(this->children.begin(), this->children.end(), nullptr) == 4);
 }
 
 
@@ -70,8 +70,9 @@ bool QuadTree::isFull() {
 
 
 // The subidivde takes a full tree and splits it up and inserts its children into the rest of the tree
+// Will be improved later, just a bit of a hack solution so far
 void QuadTree::subdivide() {
-    if (!this->isRegion) {
+    if (!this->isRegion()) {
         return;
     }
 
@@ -82,10 +83,11 @@ void QuadTree::subdivide() {
     
     // Generate a new region subdivisions given the current region
     std::vector<std::shared_ptr<QuadTree>> newRegions{
-        std::make_shared<QuadTree>(tr, cinder::vec2(br.x / 2, br.y / 2), this),
-        std::make_shared<QuadTree>(cinder::vec2(br.x / 2, tr.y), cinder::vec2(br.x, br.y / 2), this),
-        std::make_shared<QuadTree>(cinder::vec2(tr.x, br.y /2), cinder::vec2(tr.x / 2, br.y), this),
-        std::make_shared<QuadTree>(cinder::vec2(br.x / 2, br.y /2), br, this)
+        // Im so sorry this exists
+        std::make_shared<QuadTree>(Box(tr, cinder::vec2(br.x / 2, br.y / 2)), this),
+        std::make_shared<QuadTree>(Box(cinder::vec2(br.x / 2, tr.y), cinder::vec2(br.x, br.y / 2)), this),
+        std::make_shared<QuadTree>(Box(cinder::vec2(tr.x, br.y /2), cinder::vec2(tr.x / 2, br.y)), this),
+        std::make_shared<QuadTree>(Box(cinder::vec2(br.x / 2, br.y /2), br), this)
     };
 
 
@@ -110,7 +112,7 @@ void QuadTree::subdivide() {
 
 
 // Insert method 
-bool QuadTree::insert(const Node& data) {
+bool QuadTree::insert(Node& data) {
     
     // If this node is full then subdivide the current node and proceeed with the rest of the insert method
     if (this->isFull()) {
@@ -125,6 +127,7 @@ bool QuadTree::insert(const Node& data) {
                 return true;
             }
         }
+
     // As long as this node is not full insert an extra peice of data
     } else {
         // Enter it into the first empty value we find :)
@@ -146,7 +149,7 @@ bool QuadTree::insert(const Node& data) {
 std::shared_ptr<QuadTree> QuadTree::region_search(Particle& particle) {
     if (this->isFull()) {
         for(auto node: this->children) {
-            if (&(node->data.particle) == &particle) {
+            if (std::addressof(node->data.particle.get()) == &particle) {
                 return node;
             }
         }
