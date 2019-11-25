@@ -11,34 +11,58 @@
 float x = 1920;
 float y = 1080;
 
+
+std::vector<Particle> generateParticles() {
+    return {
+        Particle(cinder::vec2(1000, 1000)),
+        Particle(cinder::vec2(800, 1000)),
+        Particle(cinder::vec2(900, 1000)),
+        Particle(cinder::vec2(700, 1000)),
+        Particle(cinder::vec2(600, 1000)),
+        Particle(cinder::vec2(500, 1000)),
+        Particle(cinder::vec2(400, 1000)),
+        Particle(cinder::vec2(300, 1000)),
+        Particle(cinder::vec2(200, 1000)),
+        Particle(cinder::vec2(100, 1000)),
+        Particle(cinder::vec2(1200, 1000)),
+        Particle(cinder::vec2(1300, 1000)),
+        Particle(cinder::vec2(1400, 1000)),
+        Particle(cinder::vec2(1500, 1000)),
+        Particle(cinder::vec2(1600, 1000)),
+        Particle(cinder::vec2(1700, 1000)),
+    };
+}
+
+
+
+
+
+
+
+
+
+
+
 int main(void) {
     // Guard
-    #ifdef DEBUG
-        std::cout << "Application must be in debug mode to execute testing files...";
+    #ifndef DEBUG
         return EXIT_FAILURE;
     #endif
     
 
-    std::vector<Particle> particles;
-    // Generate a list of random particles
-    for(int i = 0; i < 50; i++) {
-        // Randomised position
-        float xPos = cinder::randFloat(x);
-        float yPos = cinder::randFloat(y);
-        cinder::vec2 randPos = cinder::vec2(xPos, yPos);
-
-        particles.push_back(Particle(randPos));
+    std::vector<Particle> particles = generateParticles();
+    
+    // Create a tree object to test
+    Box region(cinder::vec2(0.0, 0.0), cinder::vec2(x, y));
+    QuadTree quadtree(region);
+    for (auto particle: particles) {
+        quadtree.insert(&particle);
     }
 
-    QuadTree gameBoard(Box(cinder::vec2(0, 0), cinder::vec2(x, y)), nullptr);
-    for(Particle& p: particles) {
-        Node data;
-        data.particle = p;
-        gameBoard.insert(data);
-    }
+    std::cout << quadtree.countElements() << "\n";
 
+    
 
-    std::cout << gameBoard.printTree();
 
 
 
