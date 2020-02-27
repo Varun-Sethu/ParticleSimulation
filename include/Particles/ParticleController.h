@@ -24,12 +24,14 @@ class ParticleController {
         // Misc methods
         void flockTowards(cinder::vec2 position);
         void clearAccelerations();
-
+        void handleCollision(Particle* p1, Particle* p2);
     private:
         std::list<Particle> particles;
 
         int windowHeight;
         int windowWidth;
+
+        friend class CollisionDetector;
 };
 
 #endif

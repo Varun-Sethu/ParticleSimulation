@@ -4,7 +4,6 @@
 #include "Util/Util.h"
 #include "cinder/Rand.h"
 #include <cmath>
-#include "Config.h"
 
 Particle::Particle() {
 
@@ -66,6 +65,11 @@ void Particle::update() {
 void Particle::draw() {
     cinder::gl::drawSolidCircle(this->position, this->radius);
 }
+bool Particle::intersects(Particle* p) {
+    return cinder::length(this->position - p->position) <= this->radius + p->radius;
+} 
+
+
 
 
 

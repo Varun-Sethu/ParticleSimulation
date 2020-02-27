@@ -15,9 +15,11 @@ class Particle {
         // Miscelenious methods
         void updateScreenDimensions(int x, int y);
         void moveTowards(cinder::vec2 position);
+        bool intersects(Particle* p);
 
         cinder::vec2 getEnergy();
         void setEnergy(cinder::vec2 energy);
+
 
 
 

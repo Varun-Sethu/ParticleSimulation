@@ -91,3 +91,13 @@ void ParticleController::flockTowards(cinder::vec2 position) {
         p->moveTowards(position);
     }
 }
+
+// Deal with the collision of two different particles
+void ParticleController::handleCollision(Particle* p1, Particle* p2) {
+    // Just rever the directions of motion for each particle and recude their respective energies
+    p1->velocity = -p1->velocity;
+    p2->velocity = -p2->velocity;
+
+    p1->setEnergy(p1->getEnergy() * 0.9f);
+    p2->setEnergy(p2->getEnergy() * 0.9f);
+}

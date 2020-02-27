@@ -3,9 +3,10 @@
 #include "cinder/gl/gl.h"
 #include "cinder/app/RendererGl.h"
 #include "Particles/ParticleController.h"
+#include "Util/CollisionEngine.h"
+#include "Util/QuadTree.h"
 #include <list>
 #include <iostream>
-#include "Config.h"
 
 using namespace cinder;
 
@@ -25,21 +26,16 @@ class PlayingApp : public app::App {
         void mouseUp(cinder::app::MouseEvent event);
     private:
         ParticleController particleController;
+        CollisionDetector collisionDetector;
+
 };
 void prepareSettings(PlayingApp::Settings *settings) {
     settings->setWindowSize(800, 600);
     settings->setFrameRate(60.0f);
 }
 
-PlayingApp::PlayingApp() {
+PlayingApp::PlayingApp(): collisionDetector(&(this->particleController), cinder::app::getWindowHeight(), cinder::app::getWindowWidth()) {
     this->particleController = ParticleController();
-    
-
-    // Debug guard
-    #ifdef DEBUG
-        std::cout << "Cannot execute application with debug defined, undefine debug in include/Config.h";
-        this->quit();
-    #endif
 }
 
 
@@ -52,6 +48,7 @@ void PlayingApp::setup() {
     this->particleController.addParticle(2);
 }
 void PlayingApp::update() {
+    this->collisionDetector.detect();
     this->particleController.update();
 }
 void PlayingApp::draw() {
