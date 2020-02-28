@@ -57,6 +57,7 @@ void PlayingApp::draw() {
 }
 void PlayingApp::resize() {
     this->particleController.updateWindowDimensions(cinder::app::getWindowWidth(), cinder::app::getWindowHeight());
+    this->collisionDetector.updateScreenDimensions((float) cinder::app::getWindowWidth(), (float) cinder::app::getWindowHeight());
 }
 
 

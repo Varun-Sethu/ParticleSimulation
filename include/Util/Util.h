@@ -8,6 +8,6 @@ enum class ScreenEdge {
 };
 
 
-ScreenEdge nearBehindEdge(int height, int width, cinder::vec2 position);
+ScreenEdge nearBehindEdge(int height, int width, cinder::vec2 position, float buffer);
 
 #endif

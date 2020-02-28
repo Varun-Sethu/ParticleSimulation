@@ -3,7 +3,7 @@
 
 #include "Particle.h"
 #include "cinder/Vector.h"
-#include <list>
+#include <vector>
 
 
 class ParticleController {
@@ -26,7 +26,7 @@ class ParticleController {
         void clearAccelerations();
         void handleCollision(Particle* p1, Particle* p2);
     private:
-        std::list<Particle> particles;
+        std::vector<Particle> particles;
 
         int windowHeight;
         int windowWidth;

@@ -36,7 +36,7 @@ void Particle::update() {
     }
 
     // Screen edge detection method
-    ScreenEdge edge = nearBehindEdge(this->windowHeight, this->windowWidth, this->position);
+    ScreenEdge edge = nearBehindEdge(this->windowHeight, this->windowWidth, this->position, this->radius);
     if (edge != ScreenEdge::NONE) {
         collided = true;
         // Flip the velocity
@@ -53,6 +53,12 @@ void Particle::update() {
     }
 
     this->position += this->velocity;
+    // If the position is outside of the window for some reason then just reset the position
+    if (this->position.x < 0.0f) this->position.x = 0.0f;
+    if (this->position.x > windowWidth) this->position.x = windowWidth;
+    if (this->position.y < 0.0f) this->position.y = 0.0f;
+    if (this->position.y > windowHeight) this->position.y = windowHeight;
+
     if (collided) {
         // Redeuce the total energy of the particle by 10%
         cinder::vec2 newEnergy = this->getEnergy();

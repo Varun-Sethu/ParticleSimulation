@@ -48,9 +48,9 @@ void ParticleController::addParticle(int amt) {
 void ParticleController::addParticle(cinder::vec2 init, int amt) {
     for (int i = 0; i < amt; i++) {
         cinder::vec2 unitvec = cinder::randVec2();
-        cinder::vec2 newPosition = init + unitvec;
+        cinder::vec2 newPosition = init + 30.0f*unitvec;
 
-        while(nearBehindEdge(this->windowHeight, this->windowWidth, newPosition) != ScreenEdge::NONE) {
+        while(nearBehindEdge(this->windowHeight, this->windowWidth, newPosition, 0) != ScreenEdge::NONE) {
             unitvec = cinder::randVec2();
             newPosition = init + unitvec;
         }
@@ -95,8 +95,8 @@ void ParticleController::flockTowards(cinder::vec2 position) {
 // Deal with the collision of two different particles
 void ParticleController::handleCollision(Particle* p1, Particle* p2) {
     // Just rever the directions of motion for each particle and recude their respective energies
-    p1->velocity = -p1->velocity;
-    p2->velocity = -p2->velocity;
+    p1->velocity = p2->velocity;
+    p2->velocity = p1->velocity;
 
     p1->setEnergy(p1->getEnergy() * 0.9f);
     p2->setEnergy(p2->getEnergy() * 0.9f);
