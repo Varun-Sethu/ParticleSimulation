@@ -1,11 +1,11 @@
-# Spaghetti Particles?
+# Particle Simulations 
 
-Just a random application meant to allow me to play around with Cinder... (https://github.com/cinder/Cinder)
+Simple application developed to utilise Cinder: (https://github.com/cinder/Cinder)
 
 ## Usage
 Spawn particles with the right click button on your mouse and set up a gravity sink with the left click, particles will collide and lose energy. When they collide they tend to stick together.
 
-Collision detection is based on a quadtree and all source code can be found in the include directory
+Collision detection utilises quadtrees for efficent spatial partioning and collision identification.
 
 
 ## Compilation
